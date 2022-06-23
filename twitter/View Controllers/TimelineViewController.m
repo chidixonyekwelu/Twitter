@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "TweetCell.h"
 #import "Tweet.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface TimelineViewController () <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -59,13 +60,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tweet" forIndexPath:indexPath];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
+    cell.tweet = tweet;
     
     cell.twitterUsername.text = tweet.user.name;
-    cell.twitterName.text = tweet.user.screenName;
-    
-    
-    
-    
+    cell.thisTweet.text = tweet.text;
+    NSString *URLString = tweet.user.profilePicture;
+    NSURL *url = [NSURL URLWithString:URLString];
+    NSData *urlData = [NSData dataWithContentsOfURL:url];
+    cell.profilePicture.image = [UIImage imageWithData:urlData]; // create image and passes the data to profile picture
     return cell;
 }
 

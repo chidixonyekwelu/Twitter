@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tweet.h"
+#import "UIImageView+AFNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *replyTweet;
 @property (weak, nonatomic) IBOutlet UILabel *twitterUsername;
 @property (weak, nonatomic) IBOutlet UILabel *twitterName;
+
+@property (strong, nonatomic) Tweet *tweet;
 
 
 @end
