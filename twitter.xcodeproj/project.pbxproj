@@ -21,6 +21,8 @@
 		EE9BBF3B28624912006CF45B /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9BBF3A28624912006CF45B /* TweetCell.m */; };
 		EE9BBF462863B96D006CF45B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9BBF422863B96D006CF45B /* User.m */; };
 		EE9BBF472863B96D006CF45B /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9BBF452863B96D006CF45B /* Tweet.m */; };
+		EE9BBF4A2864F62B006CF45B /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9BBF492864F62B006CF45B /* ComposeViewController.m */; };
+		EE9BBF522866852B006CF45B /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9BBF512866852B006CF45B /* TweetDetailsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,10 @@
 		EE9BBF432863B96D006CF45B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		EE9BBF442863B96D006CF45B /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
 		EE9BBF452863B96D006CF45B /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
+		EE9BBF482864F62B006CF45B /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		EE9BBF492864F62B006CF45B /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
+		EE9BBF502866852B006CF45B /* TweetDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TweetDetailsViewController.h; sourceTree = "<group>"; };
+		EE9BBF512866852B006CF45B /* TweetDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,10 @@
 				6AD278D920BC4B950085BC29 /* AppDelegate.m */,
 				EE9BBF332861161A006CF45B /* Keys.plist */,
 				6AD278DE20BC4B950085BC29 /* Main.storyboard */,
+				EE9BBF502866852B006CF45B /* TweetDetailsViewController.h */,
+				EE9BBF512866852B006CF45B /* TweetDetailsViewController.m */,
+				EE9BBF482864F62B006CF45B /* ComposeViewController.h */,
+				EE9BBF492864F62B006CF45B /* ComposeViewController.m */,
 				6AD278E120BC4B970085BC29 /* Assets.xcassets */,
 				6AD278E320BC4B970085BC29 /* LaunchScreen.storyboard */,
 				6AD278E620BC4B970085BC29 /* Info.plist */,
@@ -256,6 +266,8 @@
 				EE9BBF472863B96D006CF45B /* Tweet.m in Sources */,
 				EE9BBF462863B96D006CF45B /* User.m in Sources */,
 				6AD278F320BCA6020085BC29 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
+				EE9BBF522866852B006CF45B /* TweetDetailsViewController.m in Sources */,
+				EE9BBF4A2864F62B006CF45B /* ComposeViewController.m in Sources */,
 				6AD278E820BC4B970085BC29 /* main.m in Sources */,
 				6AD2790620BCC0380085BC29 /* LoginViewController.m in Sources */,
 				6AD278DA20BC4B950085BC29 /* AppDelegate.m in Sources */,

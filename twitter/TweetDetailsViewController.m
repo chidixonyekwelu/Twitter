@@ -13,6 +13,17 @@
 @end
 
 @implementation TweetDetailsViewController
+- (IBAction)likeButton:(id)sender {
+    
+}
+- (IBAction)replytweetButton:(id)sender {
+}
+- (IBAction)retweetButton:(id)sender {
+}
+- (IBAction)composeButton:(id)sender {
+}
+- (IBAction)logoutButton:(id)sender {
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

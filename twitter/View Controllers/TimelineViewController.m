@@ -13,13 +13,16 @@
 #import "TweetCell.h"
 #import "Tweet.h"
 #import "UIImageView+AFNetworking.h"
-
-@interface TimelineViewController () <UITableViewDataSource>
+#import "ComposeViewController.h"
+@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *arrayOfTweets;
 @end
 
 @implementation TimelineViewController
+
+    
+
 - (IBAction)didTapLogout:(id)sender {
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
@@ -33,7 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.dataSource = self;
-    
+    [self.tableView reloadData];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     // Get timeline
     
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
@@ -63,7 +67,10 @@
     cell.tweet = tweet;
     
     cell.twitterUsername.text = tweet.user.name;
+    cell.twitterName.text = [NSString stringWithFormat: @"@%@", tweet.user.name];
     cell.thisTweet.text = tweet.text;
+    cell.twitterDate.text = tweet.createdAtString;
+    
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
     NSData *urlData = [NSData dataWithContentsOfURL:url];
@@ -79,6 +86,9 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *navigationController = [segue destinationViewController];
+        ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+        composeController.delegate = self;
 //     Get the new view controller using [segue destinationViewController].
      UITableViewCell *MyCell = sender;
     NSIndexPath *IndexPath = [self.tableView indexPathForCell:MyCell];
@@ -87,5 +97,11 @@
 
 
 
+
+- (void)didTweet:(nonnull Tweet *)tweet {
+    [self.arrayOfTweets insertObject:tweet atIndex:0];
+    [self.tableView reloadData];
+
+}
 
 @end

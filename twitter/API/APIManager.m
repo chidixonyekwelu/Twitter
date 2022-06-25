@@ -27,15 +27,14 @@ static NSString * const baseURLString = @"https://api.twitter.com";
 }
 
 - (instancetype)init {
-    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSURL *baseURL = [NSURL URLWithString:baseURLString];
+    
+    // TODO: fix code below to pull API Keys from your new Keys.plist file
+        NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
         NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
 
         NSString *key = [dict objectForKey: @"consumer_Key"];
         NSString *secret = [dict objectForKey: @"consumer_Secret"];
-    NSURL *baseURL = [NSURL URLWithString:baseURLString];
-    
-    // TODO: fix code below to pull API Keys from your new Keys.plist file
-    
     
     
     // Check for launch arguments override
@@ -66,4 +65,42 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     }];
 }
 
+- (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion {
+    NSString *urlString = @"1.1/statuses/update.json";
+    NSDictionary *parameters = @{@"status": text};
+    
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion {
+
+    NSString *urlString = @"1.1/favorites/create.json";
+
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError * ))completion {
+
+    NSString *urlString = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", tweet.idStr];
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+
+
+}
 @end

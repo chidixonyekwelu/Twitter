@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TweetCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *twitterDate;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UILabel *thisTweet;
 @property (weak, nonatomic) IBOutlet UIButton *likeTweet;
