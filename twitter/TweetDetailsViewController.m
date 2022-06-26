@@ -7,8 +7,19 @@
 //
 
 #import "TweetDetailsViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "TweetCell.h"
+
 
 @interface TweetDetailsViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *likebutton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *replyTweetButton;
+@property (weak, nonatomic) IBOutlet UILabel *profileTweetLabel;
+@property (weak, nonatomic) IBOutlet UILabel *profiledateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *profileusernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *profilenameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 
 @end
 
@@ -20,24 +31,23 @@
 }
 - (IBAction)retweetButton:(id)sender {
 }
-- (IBAction)composeButton:(id)sender {
-}
-- (IBAction)logoutButton:(id)sender {
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    NSLog(@"%@", self.tweet);
+    self.profilenameLabel.text = self.tweet.user.name;
+    self.profileusernameLabel.text = self.tweet.user.screenName;
+    self.profiledateLabel.text = self.tweet.createdAtString;
+    self.profileTweetLabel.text = self.tweet.text;
+    NSString *URLString = self.tweet.user.profilePicture;
+    NSURL *url = [NSURL URLWithString:URLString];
+    [self.profileImageView setImageWithURL:url];
+    NSString *favoriteCountString = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+    [self.likebutton setTitle:favoriteCountString forState:UIControlStateNormal];
+    NSString *retweetCountString = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    [self.retweetButton setTitle:retweetCountString forState:UIControlStateNormal];
+  //  self.profileImageView.image
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

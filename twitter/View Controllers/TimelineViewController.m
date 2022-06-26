@@ -14,9 +14,12 @@
 #import "Tweet.h"
 #import "UIImageView+AFNetworking.h"
 #import "ComposeViewController.h"
+#import "TweetDetailsViewController.h"
+
 @interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *arrayOfTweets;
+@property(strong, nonatomic) UIRefreshControl *refreshcontrol;
 @end
 
 @implementation TimelineViewController
@@ -38,8 +41,19 @@
     self.tableView.dataSource = self;
     [self.tableView reloadData];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.refreshcontrol = [[UIRefreshControl alloc] init];
+    [self.refreshcontrol addTarget:self action:@selector(loadTweets) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshcontrol atIndex:0];
+}
+
+- (void)beginRefresh:(UIRefreshControl *)refreshControl {
+    [self.tableView reloadData];
+    [refreshControl endRefreshing];
+}
     // Get timeline
     
+- (void)loadTweets {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             self.arrayOfTweets = (NSMutableArray*) tweets;
@@ -55,6 +69,7 @@
         [self.tableView reloadData];
     }];
 }
+
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -86,12 +101,33 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = [segue destinationViewController];
-        ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-        composeController.delegate = self;
-//     Get the new view controller using [segue destinationViewController].
-     UITableViewCell *MyCell = sender;
-    NSIndexPath *IndexPath = [self.tableView indexPathForCell:MyCell];
+    if ([[segue identifier] isEqualToString:@"composeSegue"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+            ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+            composeController.delegate = self;
+    //     Get the new view controller using [segue destinationViewController].
+         UITableViewCell *MyCell = sender;
+        NSIndexPath *IndexPath = [self.tableView indexPathForCell:MyCell];
+    }
+    else if ([[segue identifier] isEqualToString:@"detailsSegue"]) {
+        TweetDetailsViewController *tweetdetailsviewController = [segue destinationViewController];
+        TweetCell *cell = (TweetCell *)sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        Tweet *thisTweet = self.arrayOfTweets[indexPath.row];
+        tweetdetailsviewController.tweet = thisTweet;
+        
+    }
+
+    
+    
+//    if ([[segue identifier] isEqualToString:@"composeSegue"]) {
+//        UINavigationController *navigationController = [segue destinationViewController];
+//            ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+//            composeController.delegate = self;
+//    //     Get the new view controller using [segue destinationViewController].
+//         UITableViewCell *MyCell = sender;
+//        NSIndexPath *IndexPath = [self.tableView indexPathForCell:MyCell];
+//    }
     // Pass the selected object to the new view controller.
 }
 
